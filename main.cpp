@@ -12,8 +12,8 @@ class CellularAutomata : public olc::PixelGameEngine
 	public:
 		bool** currentState;
 		bool** nextState;
-		int w = 1920;
-		int h = 1080;
+		int w =  576;
+		int h = 324;
 
 		bool OnUserCreate() override
 		{
@@ -78,7 +78,7 @@ class CellularAutomata : public olc::PixelGameEngine
 int main()
 {
 	CellularAutomata demo;
-	if (demo.Construct(1920, 1080, 1, 1, true))
+	if (demo.Construct(576, 324, 2, 2))
 		demo.Start();
 	return 0;
 }
