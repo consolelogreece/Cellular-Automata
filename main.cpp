@@ -105,14 +105,14 @@ class CellularAutomata : public olc::PixelGameEngine
 
 					int count = 0;
 
-					if (currentState[x - 1][y - 1]) count++;
-					if (currentState[x][y - 1]) count++;
-					if (currentState[x + 1][y - 1]) count++;
-					if (currentState[x - 1][y]) count++;
-					if (currentState[x + 1][y]) count++;
-					if (currentState[x - 1][y + 1]) count++;
-					if (currentState[x][y + 1]) count++;
-					if (currentState[x + 1][y + 1]) count++;
+					count += currentState[x - 1][y - 1]; // above left
+					count += currentState[x][y - 1]; // above middle
+					count += currentState[x + 1][y - 1]; // above right
+					count += currentState[x - 1][y]; // left
+					count += currentState[x + 1][y]; // right
+					count += currentState[x - 1][y + 1]; // below left
+					count += currentState[x][y + 1]; // below
+					count += currentState[x + 1][y + 1]; // below right
 
 					bool shouldLive = false;
 
@@ -126,8 +126,6 @@ class CellularAutomata : public olc::PixelGameEngine
 								break;
 							}
 						}
-
-						nextState[x][y] = shouldLive;
 					}
 					else
 					{
