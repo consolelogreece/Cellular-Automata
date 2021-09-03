@@ -32,6 +32,8 @@ class CellularAutomata : public olc::PixelGameEngine
 		std::vector<int> survive;
 		bool** currentState;
 		bool** nextState;
+		float timeSinceUpdate;
+		float timeBeforeUpdate = 0.03f;
 
 		void GenerateRules()
 		{
@@ -80,6 +82,17 @@ class CellularAutomata : public olc::PixelGameEngine
 	
 		bool OnUserUpdate(float fElapsedTime) override
 		{		
+			// make sure updates dont run too fast.
+			timeSinceUpdate += fElapsedTime;
+			if (timeSinceUpdate < timeBeforeUpdate)
+			{
+				return true;
+			}
+			else
+			{
+				timeSinceUpdate = 0;
+			}
+
 			for (int x = 2; x < w; x++)
 			{
 				for (int y = 2; y < h; y++)
