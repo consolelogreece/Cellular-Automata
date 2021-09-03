@@ -2,8 +2,19 @@
 #include "olcPixelGameEngine.h"
 #include <map>
 
+// rulesets, maps a name to born rules[0], survive rules[1]
 std::map<std::string, std::vector<std::string>> rulesets = {
-	{"Conway's", { "3", "23"}}
+	{"Conway's", { "3", "23"}},
+	{"Replicator", {"1357", "1357"}},
+	{"Seeds", {"2", ""}},
+	{"B25/S4", {"25", "4"}},
+	{"Life without death", {"3", "012345678"}},
+	{"34 Life", {"34", "34"}},
+	{"Diamoeba", {"35678", "5678"}},
+	{"2x2", {"36", "125"}},
+	{"Day & Night", {"3678", "34678"}},
+	{"Morley", {"368", "245"}},
+	{"Anneal", {"4678", "35678"}}
 };
 
 class CellularAutomata : public olc::PixelGameEngine
