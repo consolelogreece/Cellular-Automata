@@ -1,5 +1,10 @@
 #define OLC_PGE_APPLICATION
 #include "olcPixelGameEngine.h"
+#include <map>
+
+std::map<std::string, std::vector<std::string>> rulesets = {
+	{"Conway's", { "3", "23"}}
+};
 
 class CellularAutomata : public olc::PixelGameEngine
 {
@@ -10,10 +15,31 @@ class CellularAutomata : public olc::PixelGameEngine
 			sAppName = "Cellular Automata";
 		}
 	public:
+		int w = 576;
+		int h = 324;
+		std::vector<int> born;
+		std::vector<int> survive;
 		bool** currentState;
 		bool** nextState;
-		int w =  576;
-		int h = 324;
+
+		void GenerateRules()
+		{
+			std::vector<std::string> ruleset = rulesets["Conway's"];
+
+			std::string bornString = ruleset[0];
+
+			std::string surviveString = ruleset[1];
+
+			for (int i = 0; i < bornString.length(); i++)
+			{
+				born.insert(born.end(), bornString[i] - '0');
+			}
+
+			for (int i = 0; i < surviveString.length(); i++)
+			{
+				survive.insert(survive.end(), surviveString[i] - '0');
+			}
+		}
 
 		bool OnUserCreate() override
 		{
@@ -35,6 +61,8 @@ class CellularAutomata : public olc::PixelGameEngine
 					else currentState[x][y] = false;
 				}
 			}
+
+			GenerateRules();
 
 			return true;
 		}
@@ -61,9 +89,34 @@ class CellularAutomata : public olc::PixelGameEngine
 					if (currentState[x][y + 1]) count++;
 					if (currentState[x + 1][y + 1]) count++;
 
-					if (alive && (count < 2 || count > 3)) nextState[x][y] = false;
-					else if (count == 3) nextState[x][y] = true;
-					else nextState[x][y] = alive;
+					bool shouldLive = false;
+
+					if (alive)
+					{
+						for (int n : survive)
+						{
+							if (count == n)
+							{
+								shouldLive = true;
+								break;
+							}
+						}
+
+						nextState[x][y] = shouldLive;
+					}
+					else
+					{
+						for (int n : born)
+						{
+							if (count == n)
+							{
+								shouldLive = true;
+								break;
+							}
+						}
+					}
+
+					nextState[x][y] = shouldLive;
 				}
 			}
 
