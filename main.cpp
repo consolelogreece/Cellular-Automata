@@ -28,6 +28,7 @@ class CellularAutomata : public olc::PixelGameEngine
 	public:
 		int w = 576;
 		int h = 324;
+		int seedWeight = 20;
 		std::vector<int> born;
 		std::vector<int> survive;
 		bool** currentState;
@@ -37,7 +38,7 @@ class CellularAutomata : public olc::PixelGameEngine
 
 		void GenerateRules()
 		{
-			std::vector<std::string> ruleset = rulesets["Conway's"];
+			std::vector<std::string> ruleset = rulesets["Life without death"];
 
 			std::string bornString = ruleset[0];
 
@@ -69,8 +70,8 @@ class CellularAutomata : public olc::PixelGameEngine
 			{
 				for (int y = 1; y < h + 2; y++)
 				{
-					int  r = rand() % (10);
-					if (r == 5) currentState[x][y] = true;
+					int r = rand() % seedWeight;
+					if (r == 0) currentState[x][y] = true;
 					else currentState[x][y] = false;
 				}
 			}
