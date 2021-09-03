@@ -83,7 +83,7 @@ class CellularAutomata : public olc::PixelGameEngine
 	
 		bool OnUserUpdate(float fElapsedTime) override
 		{		
-			// make sure updates dont run too fast.
+			// ensure updates do not run too frequently.
 			timeSinceUpdate += fElapsedTime;
 			if (timeSinceUpdate < timeBeforeUpdate)
 			{
